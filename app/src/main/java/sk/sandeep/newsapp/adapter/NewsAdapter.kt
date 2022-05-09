@@ -2,13 +2,13 @@ package sk.sandeep.newsapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
+import sk.sandeep.newsapp.R
 import sk.sandeep.newsapp.databinding.ItemArticlePreviewBinding
-
 import sk.sandeep.newsapp.model.Article
 
 class NewsAdapter(private val clickListener: (Article) -> Unit) :
@@ -18,6 +18,7 @@ class NewsAdapter(private val clickListener: (Article) -> Unit) :
         override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem.url == newItem.url
         }
+
         override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
             return oldItem == newItem
         }
@@ -35,7 +36,13 @@ class NewsAdapter(private val clickListener: (Article) -> Unit) :
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article = differ.currentList[position]
         holder.binding.apply {
-            Glide.with(holder.binding.root).load(article.urlToImage).into(ivArticleImage)
+            article.urlToImage?.let {
+                val imgUri = article.urlToImage.toUri().buildUpon().scheme("https").build()
+                ivArticleImage.load(imgUri) {
+                    placeholder(R.drawable.loading_animation)
+                    error(R.drawable.ic_broken_image)
+                }
+            }
             tvSource.text = article.source?.name
             tvTitle.text = article.title
             tvDescription.text = article.description

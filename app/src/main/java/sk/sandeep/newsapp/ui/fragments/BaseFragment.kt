@@ -26,7 +26,6 @@ abstract class BaseFragment<V : ViewModel, T : ViewDataBinding>: Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, getContentView(), container, false)
         val view = binding.root
-      //  viewModel = ViewModelProviders.of(this).get(getViewModelClass())
 
         val newsRepository = context?.let { ArticleDatabase(it) }?.let { NewsRepository(it) }
 

@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.fragments.BreakingNewsFragment">
 
-    <data>
-
-        <variable
-            name="newsModel"
-            type="sk.sandeep.newsapp.view_model.NewsViewModel" />
-
-    </data>
     <!-- Layout For BreakingNews Fragments -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
